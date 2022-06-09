@@ -1,23 +1,53 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid';
+import axios from "axios"
 const Todo = () => {
     const [text, setText] = useState("")
     const [todo, setTodo] = useState([]);
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        // console.log(text)
-        setTodo([...todo, text])
-        setText("")
-    }
     const handleText = (e) => {
         setText(e.target.value)
     }
-    const handleComplete = (e) => {
-        console.log(e)
-        
-        // setTodo([...text,e])
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        // console.log(text)
+        const a = {
+            id:uuid(),
+            todo:text
+        }
+        setText("");  
+        axios.post("http://localhost:8080",a).then(getTodo)
     }
+    
+    //ADD 
+    const getTodo =()=>{
+        axios.get("http://localhost:8080").then(function (response) {
+        // console.log(...response.data.todos);
+        setTodo([...response.data.todos]);
+        }); 
+    }
+    useEffect(()=>{
+        getTodo()
+    },[])
+
+    
+    //COMPLETE
+    const handleComplete = (e) => {
+        const b = {
+            id:e.id,
+            todo:`${e.todo} ===> Completed`
+        }
+        axios.put(`http://localhost:8080/${e.id}`,b).then(getTodo);
+    }
+ 
+    //DELETE
+    const handleDelete = (e) => { 
+        // console.log(e)
+        axios.delete(`http://localhost:8080/${e.id}`).then(getTodo) 
+        // console.log(e)
+    }
+
     return (
         <div>
             <h2>TODO LIST</h2>
@@ -29,18 +59,18 @@ const Todo = () => {
             </form>
             {
                 todo.map((e) => {
-                    return <div key={uuid()} >
+                    return <div key={e.id} >
                         <div className="ui cards">
                             <div className="card">
                                 <div className="content">
                                     <div className="header">
-                                        {e}
+                                        {e.todo}
                                     </div>
                                 </div>
                                 <div className="extra content">
                                     <div className="ui two buttons">
                                         <div className="ui basic green button" onClick={()=>handleComplete(e)}>Completed</div>
-                                        <div className="ui basic red button">Delete</div>
+                                        <div className="ui basic red button" onClick={()=>handleDelete(e)}>Delete</div>
                                     </div>
                                 </div>
                             </div>

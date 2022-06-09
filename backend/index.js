@@ -2,6 +2,7 @@ const express = require("express")
 const cors = require("cors")
 const app = express();
 const fs = require("fs")
+
 app.use(cors())
 
 //Middleware
@@ -16,7 +17,7 @@ app.get("/",(req,res)=>{
     fs.readFile("./db.json", {encoding:"utf-8"}, (err,data)=>{
         const parsed = JSON.parse(data)
         console.log("get - parsed part", parsed.todos)
-        res.status(201).send("Todo List Displayed");
+        res.status(201).send(JSON.stringify(parsed));
     })
 })
 
@@ -28,7 +29,7 @@ app.post("/",(req,res)=>{
         parsed.todos = [...parsed.todos, req.body];
         console.log("post - parsed part", parsed.todos)
         fs.writeFile("./db.json", JSON.stringify(parsed), { encoding: "utf-8" },(err,data) => {
-            res.status(201).send("Todo Created");
+            res.status(201).send(JSON.stringify(parsed));
           }
         );
     })
@@ -45,7 +46,7 @@ app.delete("/:id", (req, res)=>{
         console.log("parsed part", parsed.todos)
         fs.writeFile("./db.json", JSON.stringify(parsed),"utf-8",()=>{
             res.status(201)
-            res.end("Todo Deleted");
+            res.end(JSON.stringify(parsed));
           }
         )
     })
@@ -71,7 +72,7 @@ app.put("/:id",(req,res)=>{
         console.log(update);
         parsed.todos = [...update];
         fs.writeFile("./db.json", JSON.stringify(parsed), { encoding: "utf-8" },(err,data) => {
-            res.status(201).send("Todo Updated");
+            res.status(201).send(JSON.stringify(parsed));
           }
         );
     })
@@ -92,8 +93,8 @@ app.put("/:id",(req,res)=>{
 // })
 
 
-const PORT = process.env.PORT || 8080
-// const PORT = 8080
+// const PORT = process.env.PORT || 8080
+const PORT = 8080
 app.listen(PORT,()=>{
     console.log(`server started at http://localhost:${PORT}`)
 })

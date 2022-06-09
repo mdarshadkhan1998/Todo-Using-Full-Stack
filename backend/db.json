@@ -1,20 +1,16 @@
 {
     "todos": [
         {
-            "id": "1",
-            "todo": "arshad"
+            "id": "c9eff6f9-6931-4adc-8458-6cc52093457c",
+            "todo": "arshad ===> Completed\""
         },
         {
-            "id": "2",
+            "id": "932439c6-811e-4805-9083-332ad4015733",
             "todo": "khan"
         },
         {
-            "id": "3",
-            "todo": "todo"
-        },
-        {
-            "id": "4",
-            "todo": "todo list"
+            "id": "84925fd2-ed3a-45f6-a38e-e5b08fbe092a",
+            "todo": "arshad khan"
         }
     ]
 }
