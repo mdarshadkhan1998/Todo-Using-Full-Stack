@@ -1,12 +1,20 @@
 {
-    "todos":[
+    "todos": [
         {
-            "id":"1",
-            "todo":"arshad"
+            "id": "1",
+            "todo": "arshad"
         },
         {
-            "id":"2",
-            "todo":"khan"
+            "id": "2",
+            "todo": "khan"
+        },
+        {
+            "id": "3",
+            "todo": "todo"
+        },
+        {
+            "id": "4",
+            "todo": "todo list"
         }
     ]
 }
